@@ -25,6 +25,10 @@ library(hierfstat)
 #if you want to re-run conversions, set this to FALSE
 imported = TRUE
 
+#flag set to true when you want to run fst
+#set to false if you don't want it to run - it is very slow 
+f = TRUE
+
 #Set working directory
 mydir = 'C:\\Users\\kayle\\Documents\\Morton-REU\\case_study_sims\\Simulations\\q_acerifolia'
 setwd(mydir)
@@ -57,20 +61,16 @@ total_alleles_q_acerifolia = array(0, dim = c(1, 100))
 #saving a list of genind objects created
 quac_genind_list <- list() 
 
-#list of hierfstat
+##list of data frames in converted hierfstat format
 quac_hierfstat <- list()
 
 ##quac pwfst array
 quac_pwfst_array <- array(dim = c(4,4,100))
 
-##min, max, mean of replicates 
+##min, max, mean of df replicates 
 quac_mean_max_min_fst <- matrix(nrow = 3, ncol = 100)
 
 #***********************************************************************
-#Flag
-#flag set to true when you want to run fst
-#set to false if you don't want it to run
-f = TRUE
 
 #Loop to simulate sampling
 #First, create a list of all genepop files (all replicates) to loop over
@@ -85,9 +85,13 @@ for(i in 1:length(list_files)) {
     quac_genind_list[[i]] <- temp_genind
   
     ##convert genind files to hierfstat format to run pwfst 
+    #lists of data frames 
     quac_hierfstat[[i]] <- genind2hierfstat(quac_genind_list[[i]])
   
-    ##array to store all pwfst values
+    ##array to store all pwfst values 
+    ##array dimensions:
+    #dims 1 and 2: pairwise fst between all populations 
+    #dim 3: Replicates
     quac_pwfst_array[,,i] <- pairwise.neifst(quac_hierfstat[[i]])
   
     ##calculate statistics for QUAC - max, min, mean fst 
