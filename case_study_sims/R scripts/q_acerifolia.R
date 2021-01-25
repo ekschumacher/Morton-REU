@@ -61,7 +61,7 @@ total_alleles_q_acerifolia = array(0, dim = c(1, 100))
 #saving a list of genind objects created
 quac_genind_list <- list() 
 
-##list of data frames in converted hierfstat format
+#list of data frames in converted hierfstat format
 quac_hierfstat <- list()
 
 ##quac pwfst array

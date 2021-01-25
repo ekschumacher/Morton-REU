@@ -25,6 +25,10 @@ library(hierfstat)
 #if you want to re-run conversions, set this to FALSE
 imported = TRUE
 
+#flag set to true when you want to run fst
+#set to false if you don't want it to run
+f = TRUE
+
 #set working directory
 mydir = 'C:\\Users\\kayle\\Documents\\Morton-REU\\case_study_sims\\Simulations\\q_oglethorpensis'
 setwd(mydir)
@@ -57,21 +61,16 @@ total_alleles_q_oglethorpensis = array(0, dim = c(1, 100))
 #saving a list of the genind objects 
 quog_genind_list <- list() 
 
-#list of hierfstat
+#list of data frames in converted hierfstat format
 quog_hierfstat <- list()
 
-##quog pwfst array
+##3D quog pwfst array
 quog_pwfst_array <- array(dim = c(5,5,100))
 
-##min, max, mean of replicates 
+##min, max, mean of replicates - QUOG
 quog_mean_max_min_fst <- matrix(nrow = 3, ncol = 100)
 
 #***********************************************************************
-#Flag
-#flag set to true when you want to run fst
-#set to false if you don't want it to run
-f = TRUE
-
 #Loop to simulate sampling
 #First, create a list of all genepop files (all replicates) to loop over
 #the variable 'i' represents each replicate
@@ -85,12 +84,15 @@ for(i in 1:length(list_files)) {
     quog_genind_list[[i]] <- temp_genind
   
     ##convert genind files to hierfstat format for pwfst
+    #list of dfs
     quog_hierfstat[[i]] <- genind2hierfstat(quog_genind_list[[i]])
   
     ##QUOG pwfst array 
+    #dims 1 and 2: pairwise fst between all populations 
+    #dim 3: Replicates
     quog_pwfst_array[,,i] <- pairwise.neifst(quog_hierfstat[[i]])
   
-    ##calculate statistics for QUOG
+    ##calculate Fst statistics for QUOG
     quog_mean_max_min_fst[1,i] <- mean(quog_pwfst_array[,,i], na.rm = TRUE)
     quog_mean_max_min_fst[2,i] <- min(quog_pwfst_array[,,i], na.rm = TRUE)
     quog_mean_max_min_fst[3,i] <- max(quog_pwfst_array[,,i], na.rm = TRUE)

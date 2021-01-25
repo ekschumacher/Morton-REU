@@ -25,6 +25,10 @@ library(hierfstat)
 #if you want to re-run conversions, set this to FALSE
 imported = TRUE
 
+#flag set to true when you want to run fst
+#set to false if you don't want it to run - it is very slow 
+f = TRUE
+
 #set working directory
 mydir = 'C:\\Users\\kayle\\Documents\\Morton-REU\\case_study_sims\\Simulations\\q_engelmannii'
 setwd(mydir)
@@ -57,21 +61,16 @@ total_alleles_q_engelmannii = array(0, dim = c(1, 100))
 #saving a list of the genind objects
 quen_genind_list <- list() 
 
-#list of hierfstat
+#list of data frames in converted hierfstat format
 quen_hierfstat <- list()
 
-##quen pwfst array
+##3D quen pwfst array
 quen_pwfst_array <- array(dim = c(4,4,100))
 
-##min, max, mean of replicates 
+##2D min, max, mean matrix 
 quen_mean_max_min_fst <- matrix(nrow = 3, ncol = 100)
 
 #***********************************************************************
-#Flag
-#flag set to true when you want to run fst
-#set to false if you don't want it to run
-f = TRUE
-
 #Loop to simulate sampling
 #First, create a list of all genepop files (all replicates) to loop over
 #the variable 'i' represents each replicate
@@ -85,12 +84,15 @@ for(i in 1:length(list_files)) {
     quen_genind_list[[i]] <- temp_genind
   
     ##convert genind files to hierfstat format to run pwfst 
+    #lists of data frames
     quen_hierfstat[[i]] <- genind2hierfstat(quen_genind_list[[i]])
   
     ##calculate statistics for QUEN - max, min, mean fst 
+    #dims 1 and 2: pairwise fst between all populations 
+    #dim 3: Replicates
     quen_pwfst_array[,,i] <- pairwise.neifst(quen_hierfstat[[i]])
   
-    ##calculate statistics for QUEN
+    ##calculate Fst statistics for QUEN
     quen_mean_max_min_fst[1,i] <- mean(quen_pwfst_array[,,i], na.rm = TRUE)
     quen_mean_max_min_fst[2,i] <- min(quen_pwfst_array[,,i], na.rm = TRUE)
     quen_mean_max_min_fst[3,i] <- max(quen_pwfst_array[,,i], na.rm = TRUE)
