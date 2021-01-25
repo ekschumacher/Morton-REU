@@ -67,7 +67,7 @@ quac_hierfstat <- list()
 ##quac pwfst array
 quac_pwfst_array <- array(dim = c(4,4,100))
 
-##min, max, mean of df replicates 
+##min, max, mean of replicates data frame
 quac_mean_max_min_fst <- matrix(nrow = 3, ncol = 100)
 
 #***********************************************************************
