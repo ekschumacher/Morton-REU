@@ -30,7 +30,7 @@ imported = TRUE
 f = TRUE
 
 #Set working directory
-mydir = 'C:\\Users\\kayle\\Documents\\Morton-REU\\case_study_sims\\Simulations\\q_acerifolia'
+mydir = 'C:\\Users\\eschumacher\\Documents\\kaylee_code_1_19_21\\case_study_sims\\Simulations\\q_acerifolia'
 setwd(mydir)
 
 #Defining an import function
@@ -94,7 +94,7 @@ for(i in 1:length(list_files)) {
     #dim 3: Replicates
     quac_pwfst_array[,,i] <- pairwise.neifst(quac_hierfstat[[i]])
   
-    ##calculate statistics for QUAC - max, min, mean fst 
+    ##calculate Fst statistics for QUAC - max, min, mean fst 
     quac_mean_max_min_fst[1,i] <- mean(quac_pwfst_array[,,i], na.rm = TRUE)
     quac_mean_max_min_fst[2,i] <- min(quac_pwfst_array[,,i], na.rm = TRUE)
     quac_mean_max_min_fst[3,i] <- max(quac_pwfst_array[,,i], na.rm = TRUE)
