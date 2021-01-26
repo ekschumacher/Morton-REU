@@ -30,7 +30,7 @@ imported = TRUE
 f = TRUE
 
 #set working directory
-mydir = 'C:\\Users\\kayle\\Documents\\Morton-REU\\case_study_sims\\Simulations\\q_engelmannii'
+mydir = 'C:\\Users\\eschumacher\\Documents\\kaylee_code_1_19_21\\case_study_sims\\Simulations\\q_engelmannii'
 setwd(mydir)
 
 #Defining an import function
@@ -67,7 +67,7 @@ quen_hierfstat <- list()
 ##3D quen pwfst array
 quen_pwfst_array <- array(dim = c(4,4,100))
 
-##2D min, max, mean matrix 
+##2D min, max, mean Fst matrix 
 quen_mean_max_min_fst <- matrix(nrow = 3, ncol = 100)
 
 #***********************************************************************
